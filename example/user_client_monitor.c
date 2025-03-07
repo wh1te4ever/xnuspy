@@ -206,9 +206,9 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    /* iPhone 8 14.4.2 */
+    /* iPhone 6s 14.6 */
     // Xref str "unknown class?", subroutine size is less than < 0x40
-    getClassName = (const char *(*)(const void *))(0xFFFFFFF007F7C718 + kernel_slide);
+    getClassName = (const char *(*)(const void *))(0xFFFFFFF00765420C + kernel_slide);
 
     printf("kernel slide: %#llx\n", kernel_slide);
     printf("current_proc @ %#llx\n", (uint64_t)current_proc);
@@ -217,7 +217,7 @@ int main(int argc, char **argv){
     printf("proc_pid @ %#llx\n", (uint64_t)proc_pid);
 
     // Xref str "IOUserClientCrossEndian"
-    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF008043B0C,
+    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF00770A99C,
             is_io_service_open_extended, &is_io_service_open_extended_orig);
 
     if(ret){
@@ -228,7 +228,7 @@ int main(int argc, char **argv){
 
     /* XXX Optional */
     // Find opcode: F7 57 80 52 17 00 BC 72 60 03 00 B4 F5 03 07 AA
-    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF008045020,
+    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF00770BE1C,
              _is_io_connect_method, &is_io_connect_method);
 
      if(ret){

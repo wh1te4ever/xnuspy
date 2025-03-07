@@ -163,9 +163,9 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    /* iPhone 8 14.4.2 */
+    /* iPhone 6s 14.6 */
     //Find opcode: E0 03 15 AA 42 00 80 52 04 04 80 52 E5 03 17 AA
-    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF007C0E4B0,
+    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF0072FD7CC,
             open1, &open1_orig);
 
     if(ret){
