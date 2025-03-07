@@ -118,9 +118,10 @@ static uint64_t kaddr_of_port(mach_port_t p){
      *  iPhone 8 13.6.1: 0x320
      *  iPhone X 13.3.1: 0x320
      *  iPhone 7 14.1:   0x330
+     *  iPhone 8 14.4.2: 0x330
      */
     uint64_t itk_space;
-    ret = syscall(SYS_xnuspy_ctl, XNUSPY_KREAD, task + 0x320, &itk_space,
+    ret = syscall(SYS_xnuspy_ctl, XNUSPY_KREAD, task + 0x330, &itk_space,
             sizeof(itk_space));
 
     if(ret){

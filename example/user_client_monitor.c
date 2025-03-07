@@ -206,8 +206,9 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    /* iPhone X 15.0 */
-    getClassName = (const char *(*)(const void *))(0xfffffff0080e8ba0 + kernel_slide);
+    /* iPhone 8 14.4.2 */
+    // Xref str "unknown class?", subroutine size is less than < 0x40
+    getClassName = (const char *(*)(const void *))(0xFFFFFFF007F7C718 + kernel_slide);
 
     printf("kernel slide: %#llx\n", kernel_slide);
     printf("current_proc @ %#llx\n", (uint64_t)current_proc);
@@ -215,7 +216,8 @@ int main(int argc, char **argv){
     printf("kprintf @ %#llx\n", (uint64_t)kprintf);
     printf("proc_pid @ %#llx\n", (uint64_t)proc_pid);
 
-    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xfffffff0081c1580,
+    // Xref str "IOUserClientCrossEndian"
+    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF008043B0C,
             is_io_service_open_extended, &is_io_service_open_extended_orig);
 
     if(ret){
@@ -225,14 +227,15 @@ int main(int argc, char **argv){
     }
 
     /* XXX Optional */
-    /* ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xfffffff0081c68ec, */
-    /*         _is_io_connect_method, &is_io_connect_method); */
+    // Find opcode: F7 57 80 52 17 00 BC 72 60 03 00 B4 F5 03 07 AA
+    ret = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK, 0xFFFFFFF008045020,
+             _is_io_connect_method, &is_io_connect_method);
 
-    /* if(ret){ */
-    /*     printf("Could not hook is_io_connect_method: %s\n", */
-    /*             strerror(errno)); */
-    /*     return 1; */
-    /* } */
+     if(ret){
+         printf("Could not hook is_io_connect_method: %s\n", 
+                 strerror(errno)); 
+         return 1; 
+     } 
 
     printf("Hit enter to quit\n");
     getchar();
