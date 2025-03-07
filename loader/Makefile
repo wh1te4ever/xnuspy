@@ -1,6 +1,6 @@
 CC = clang
-CFLAGS = -g
-LDFLAGS = -lusb-1.0
+CFLAGS = -g -I/opt/homebrew/include
+LDFLAGS = -L/opt/homebrew/lib -lusb-1.0
 
 ifeq ($(XNUSPY_SERIAL), 1)
 	CFLAGS += -DXNUSPY_SERIAL

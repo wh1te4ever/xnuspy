@@ -17,3 +17,8 @@ module/el1/xnuspy_ctl_tramp
 module/el3/kpp
 module/xnuspy
 opdump/opdump
+klog/klog
+example/shmem
+example/open1_hook
+example/kernel_thread
+example/kaddr_of_port

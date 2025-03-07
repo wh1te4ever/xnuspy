@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "offsets.h": "c",
+        "common.h": "c"
+    }
+}
