@@ -43,7 +43,7 @@ uint64_t (*kfree_orig)(uint64_t, uint64_t);
 uint64_t kfree(uint64_t data, uint64_t size){
     // uint64_t caller = (uint64_t)__builtin_return_address(0) - kernel_slide;
 
-	// *(uint64_t*)0x4141414141414141 = 0x4242424242424242;
+	*(uint64_t*)0x4141414141414141 = 0x4242424242424242;
 
     uint64_t kret = kfree_orig(data, size);
 

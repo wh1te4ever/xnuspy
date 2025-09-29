@@ -142,11 +142,11 @@ bool vm_deallocate_finder_15(xnu_pf_patch_t *patch, void *cacheable_stream){
 
     uint32_t *opcode_stream = cacheable_stream;
 
-    if ((opcode_stream[2] & 0xffffffff) != 0xB4000060){
+    if ((opcode_stream[8] & 0xfc000000) != 0x94000000){
         return false;
     }
 
-    uint32_t *vm_deallocate = (opcode_stream + 2);
+    uint32_t *vm_deallocate = get_branch_dst_ptr(opcode_stream + 8);
 
     g_vm_deallocate_addr = xnu_ptr_to_va(vm_deallocate);
 
