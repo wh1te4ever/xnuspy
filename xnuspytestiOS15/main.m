@@ -90,8 +90,8 @@ bool install_kernel_memory_allocate_hook(void){
     }
 	printf("kernel_slide = 0x%llx\n", kernel_slide);
 
-    // /* iPhone 6s, 15.1 */
-    uint64_t kfree_kaddr = 0xFFFFFFF007188D30;
+    // /* iPhone 6s, 15.0 */
+    uint64_t kfree_kaddr = 0xFFFFFFF007188E94;
 
     res = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK,
             kfree_kaddr, kfree, &kfree_orig);

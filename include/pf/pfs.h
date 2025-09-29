@@ -1076,13 +1076,13 @@ struct pf g_all_pfs[MAXPF][NUM_SUPPORTED_VERSIONS] = {
     },
     {
         PF_UNUSED,
-        PF_UNUSED,
+        PF_UNUSED,//C0 40 22 D4 EA FF FF 17 60 00 00 B4 48 00 01 AB
         PF_DECL32("vm_deallocate finder iOS 15",
             LISTIZE({
-                0x52800000,     /* mov w0, #0 */
-                0xD65F03C0,     /* ret */
-                0xB4000060,     /* cbz x0, #0xc */
-                0xAB010048,     /* adds X8, X2, X1 */
+                0xD42240C0,     
+                0x17FFFFEA,     
+                0xB4000060,     
+                0xAB010048,     
             }),
             LISTIZE({
                 0xffffffff,     /* match exactly */
