@@ -1,0 +1,112 @@
+[30Sep2025 03:30:24] - Panic - iPhone8,1 iPhone OS 15.1 (19B74)
+
+Panic
+panic(cpu 0 caller 0xfffffff0119e0784)
+   Kernel data abort. at pc 0xfffffff0117aa210, lr 0xfffffff01230698c (saved state: 0xfffffff00ddf3b30)
+	  x0:  0xfffffff1b85eb390 x1:  0x0000000000000001  x2:  0xfffffff1b85eb390  x3:  0x0000000000000001
+	  x4:  0xfffffff00ddf3b8c x5:  0x0000000000000001  x6:  0x0000000000000001  x7:  0xfffffff010abce70
+	  x8:  0x00000000b7d47080 x9:  0x00000000b7d47060  x10: 0x0000000000000000  x11: 0x00000000b7d47060
+	  x12: 0x0000000000000000 x13: 0x0000000000000000  x14: 0x0000000000000000  x15: 0x0000000000000000
+	  x16: 0xfffffff0117a55d0 x17: 0x0000000000000000  x18: 0xfffffff01135d000  x19: 0xfffffff1b6af0000
+	  x20: 0xfffffff012308934 x21: 0x0000000000000000  x22: 0x0000000000000000  x23: 0xfffffff011a63000
+	  x24: 0xfffffff011a1c5d8 x25: 0x0000000000000001  x26: 0xfffffff011a4b4b0  x27: 0xfffffff011a1c108
+	  x28: 0xfffffff1b52cb140 fp:  0xfffffff00ddf3ea0  lr:  0xfffffff01230698c  sp:  0xfffffff00ddf3e80
+	  pc:  0xfffffff0117aa210 cpsr: 0xa0000204         esr: 0x96000005          far: 0x00000000000001fc
+
+
+Debugger Message:      panic
+Memory ID:             0x1
+OS Release Type:       User
+OS Version:            19B74
+Kernel Version:        Darwin Kernel Version 21.1.0: Wed Oct 13 18:16:35 PDT 2021; root:xnu-8019.42.4~1/RELEASE_ARM64_S8000
+KernelCache UUID:      9264E25CF727D2E14D0B7FA9DB5AB280
+Kernel UUID:           914A996C-00E5-3154-89BA-534168DC9534
+iBoot Version:         pongoOS-2.6.3-40c1e539
+Secure Boot:           true
+Paniclog Version:      13
+Kernel Slide:          0xa218000
+Kernel Text Base:      0xfffffff01121c000
+Mach Absolute Time:    0xa2d5e6bc
+
+Epoch Time         sec       usec
+  Boot    : 0x68dacfe7 0x000456e9
+  Sleep   : 0x00000000 0x00000000
+  Wake    : 0x00000000 0x00000000
+  Calendar: 0x68dad032 0x00006b9e
+
+Zone Info
+  Zone Map: 0x0000000000000000 - 0x0000000000000000
+  . VM    : 0x0000000000000000 - 0x0000000000000000
+  . RO    : 0x0000000000000000 - 0x0000000000000000
+  . GEN0  : 0x0000000000000000 - 0x0000000000000000
+  . GEN1  : 0x0000000000000000 - 0x0000000000000000
+  . GEN2  : 0x0000000000000000 - 0x0000000000000000
+  . GEN3  : 0x0000000000000000 - 0x0000000000000000
+  . DATA  : 0x0000000000000000 - 0x0000000000000000
+  Metadata: 0x0000000000000000 - 0x0000000000000000
+  Bitmaps : 0x0000000000000000 - 0x0000000000000000
+  Extra   : 0x0000000000000000 - 0x0000000000000000
+
+CORE 0  is the one that panicked. Check the full backtrace for details.
+CORE 1: PC=0xfffffff0113bfc1c, LR=0xfffffff0113bfc1c, FP=0xfffffff00de93ef0
+
+Panicked Task:   0xfffffff1b4894678, 0 pages, 230 threads, pid 0: kernel_task
+Panicked Thread: 0xfffffff1b6af0000, backtrace: 0xfffffff00ddf32e0, tid: 3494
+    lr: 0xfffffff0113931d4 - fp: 0xfffffff00ddf3320     // debugger_collect_diagnostics+0x184
+    lr: 0xfffffff011392f64 - fp: 0xfffffff00ddf3390
+    lr: 0xfffffff0114afca0 - fp: 0xfffffff00ddf3410
+    lr: 0xfffffff0114aeea4 - fp: 0xfffffff00ddf34c0
+    lr: 0xfffffff01135d594 - fp: 0xfffffff00ddf34d0
+    lr: 0xfffffff011392c78 - fp: 0xfffffff00ddf3860
+    lr: 0xfffffff011392c78 - fp: 0xfffffff00ddf38c0
+    lr: 0xfffffff0119d99a8 - fp: 0xfffffff00ddf38e0
+    lr: 0xfffffff0119e0784 - fp: 0xfffffff00ddf3a60
+    lr: 0xfffffff0114af630 - fp: 0xfffffff00ddf3b10
+    lr: 0xfffffff01135d594 - fp: 0xfffffff00ddf3b20
+    lr: 0xfffffff01230698c - fp: 0xfffffff00ddf3ea0
+    lr: 0xfffffff012308a98 - fp: 0xfffffff00ddf3f20
+    lr: 0xfffffff011363520 - fp: 0x0000000000000000
+Panic Flags: 0x802
+
+Memory Status:
+  Busy Buffer Count: 0
+  Compressions: 0
+  Compressor Size: 0
+  Decompressions: 0
+  Memory Pages:
+    Active: 51814
+    File Backed: 61291
+    Free: 1549
+    Inactive: 45749
+    Purgeable: 1129
+    Speculative: 6088
+    Throttled: 0
+    Wired: 17159
+  Memory Pressure: false
+  Memory Pressure Details:
+    Pages Reclaimed: 0
+    Pages Wanted: 0
+  Page Size: 16384
+
+** Stackshot Succeeded ** Bytes Traced 146076 (Uncompressed 377312) **
+
+Process: kernel_task [0] (Panicked)
+  Thread: 3494       (Panicked)
+    State:          TH_RUN
+    Base Priority:  81
+    Sched Priority: 81
+    User Time:      18 usec
+    System Time:    0 usec
+    Kernel Frames:
+      00: image_0 0x100717ac78 
+      01: image_0 0x100717ac78 
+      02: image_0 0x10077c19a8 
+      03: image_0 0x10077c8784 
+      04: image_0 0x1007297630 
+      05: image_0 0x1007145594 
+      06: image_1 0x0 
+      07: image_1 0x0 
+      08: image_0 0x100714b520 
+
+NOTES:
+    - Source: (null)
