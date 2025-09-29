@@ -12,6 +12,42 @@
 
 uint64_t kernel_slide = 0;
 
+static void (*_bzero)(void *p, size_t n);
+static int (*copyinstr)(const void *uaddr, void *kaddr, size_t len, size_t *done);
+static void *(*current_proc)(void);
+static void (*kprintf)(const char *, ...);
+static void (*proc_name)(int pid, char *buf, int size);
+static pid_t (*proc_pid)(void *);
+static int (*_strcmp)(const char *s1, const char *s2);
+static void *(*unified_kalloc)(size_t sz);
+static void (*unified_kfree)(void *ptr);
+
+static long SYS_xnuspy_ctl = 0;
+
+static int gather_kernel_offsets(void){
+    int ret;
+#define GET(a, b) \
+    do { \
+        ret = syscall(SYS_xnuspy_ctl, XNUSPY_CACHE_READ, a, b, 0); \
+        if(ret){ \
+            printf("%s: failed getting %s\n", __func__, #a); \
+            return ret; \
+        } \
+    } while (0)
+
+    GET(BZERO, &_bzero);
+    GET(COPYINSTR, &copyinstr);
+    GET(CURRENT_PROC, &current_proc);
+    GET(KPRINTF, &kprintf);
+    GET(PROC_NAME, &proc_name);
+    GET(PROC_PID, &proc_pid);
+    GET(STRCMP, &_strcmp);
+    GET(UNIFIED_KALLOC, &unified_kalloc);
+    GET(UNIFIED_KFREE, &unified_kfree);
+
+    return 0;
+}
+
 /*
 kern_return_t
 kernel_memory_allocate(
@@ -43,7 +79,9 @@ uint64_t (*kfree_orig)(uint64_t, uint64_t);
 uint64_t kfree(uint64_t data, uint64_t size){
     // uint64_t caller = (uint64_t)__builtin_return_address(0) - kernel_slide;
 
-	*(uint64_t*)0x4141414141414141 = 0x4242424242424242;
+	// if(size >= 0x4000) {
+		kprintf("[XNUSPY_TEST_iOS15] kfree called, data: 0x%llx, size: 0x%llx\n",data, size);
+	// }
 
     uint64_t kret = kfree_orig(data, size);
 
@@ -64,7 +102,6 @@ uint64_t kfree(uint64_t data, uint64_t size){
 }
 
 bool install_kernel_memory_allocate_hook(void){
-    long SYS_xnuspy_ctl;
     size_t oldlen = sizeof(long);
     int res = sysctlbyname("kern.xnuspy_ctl_callnum", &SYS_xnuspy_ctl,
             &oldlen, NULL, 0);
@@ -82,6 +119,13 @@ bool install_kernel_memory_allocate_hook(void){
         return false;
     }
 
+	res = gather_kernel_offsets();
+
+    if(res){
+        printf("something failed: %s\n", strerror(errno));
+        return 1;
+    }
+
     res = syscall(SYS_xnuspy_ctl, XNUSPY_CACHE_READ, KERNEL_SLIDE,
             &kernel_slide, 0, 0);
     if(res){
@@ -95,6 +139,8 @@ bool install_kernel_memory_allocate_hook(void){
 
     res = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK,
             kfree_kaddr, kfree, &kfree_orig);
+	
+	printf("XNUSPY_INSTALL_HOOK res = %d\n", res);
 
     if(res)
         return false;
