@@ -38,14 +38,14 @@ struct kalloc_result {
 	vm_size_t     size;
 };
 
-uint64_t (*kalloc_ext_orig)(void *, uint64_t, uint64_t, uint64_t, uint64_t);
+uint64_t (*kfree_orig)(uint64_t, uint64_t);
 
-uint64_t kalloc_ext(void *kheap, uint64_t req_size, uint64_t flags, uint64_t site, uint64_t unk){
+uint64_t kfree(uint64_t data, uint64_t size){
     // uint64_t caller = (uint64_t)__builtin_return_address(0) - kernel_slide;
 
 	// *(uint64_t*)0x4141414141414141 = 0x4242424242424242;
 
-    uint64_t kret = kalloc_ext_orig(kheap, req_size, flags, site, unk);
+    uint64_t kret = kfree_orig(data, size);
 
 	// *(uint64_t*)0x4141414141414141 = 0x4242424242424242;
 
@@ -91,10 +91,10 @@ bool install_kernel_memory_allocate_hook(void){
 	printf("kernel_slide = 0x%llx\n", kernel_slide);
 
     // /* iPhone 6s, 15.1 */
-    uint64_t kalloc_ext_kaddr = 0xFFFFFFF0071886E0;
+    uint64_t kfree_kaddr = 0xFFFFFFF007188D30;
 
     res = syscall(SYS_xnuspy_ctl, XNUSPY_INSTALL_HOOK,
-            kalloc_ext_kaddr, kalloc_ext, &kalloc_ext_orig);
+            kfree_kaddr, kfree, &kfree_orig);
 
     if(res)
         return false;
