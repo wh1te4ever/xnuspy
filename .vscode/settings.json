@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "offsets.h": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "xnuspy_ctl.h": "c"
     }
 }

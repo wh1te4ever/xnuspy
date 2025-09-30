@@ -17,8 +17,8 @@ include $(THEOS)/makefiles/common.mk
 
 TOOL_NAME = xnuspytestiOS15
 
-xnuspytestiOS15_FILES = main.m
-xnuspytestiOS15_CFLAGS = -fobjc-arc
+xnuspytestiOS15_FILES = main.c
+xnuspytestiOS15_CFLAGS = -Wno-deprecated-declarations -D_FORTIFY_SOURCE=0 -fno-stack-protector -O0 
 xnuspytestiOS15_CODESIGN_FLAGS = -Sentitlements.plist
 xnuspytestiOS15_INSTALL_PATH = /usr/local/bin
 
