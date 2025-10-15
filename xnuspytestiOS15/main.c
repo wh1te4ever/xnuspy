@@ -70,20 +70,44 @@ static struct kalloc_result kalloc_ext(uint64_t kheap, uint64_t req_size, uint64
     struct kalloc_result kret = kalloc_ext_orig(kheap, req_size, flags, site);
     uint64_t caller = (uint64_t)(__builtin_return_address(0) - kernel_slide);
 
-    if(req_size >= 0x1000) {
+    if(req_size >= 0x3000) {
 
         // if(caller == 0xFFFFFFF00715B9F)  //Is it called from ipc_kmsg_copyin_from_user?
-        if((kheap-kernel_slide) == 0xFFFFFFF0070C2D58 && req_size == 0x4000)  //Is KHEAP_DEFAULT?
+        // if((kheap-kernel_slide) == 0xFFFFFFF0070C2D58 && req_size == 0x4000)  //Is KHEAP_DEFAULT?
+        // {
+        //     // kprintf("[XNUSPY_TEST_iOS15] kalloc_ext caller: 0x%llx\n", (__builtin_return_address(0) - kernel_slide));
+        //     kprintf("[XNUSPY_TEST_iOS15] kalloc_ext[KHEAP_DEFAULT] req_size: 0x%llx, kheap = 0x%llx, kret = 0x%llx\n", req_size, kheap-kernel_slide, kret);
+        // }
+
+        // // if(caller == 0xFFFFFFF007159D80)    //Is called from ipc_kmsg_alloc?
+        // if((kheap-kernel_slide) == 0xFFFFFFF0070C3350 && req_size == 0x3fcc)  //Is KHEAP_DATA_BUFFERS?
+        // {
+        //     // kprintf("[XNUSPY_TEST_iOS15] kalloc_ext caller: 0x%llx\n", (__builtin_return_address(0) - kernel_slide));
+        //     kprintf("[XNUSPY_TEST_iOS15] kalloc_ext[KHEAP_DATA_BUFFERS] req_size: 0x%llx, kheap = 0x%llx, kret = 0x%llx\n", req_size, kheap-kernel_slide, kret);
+        // }
+
+
+        // kprintf("[XNUSPY_TEST_iOS15] kalloc_ext req_size: 0x%llx, kheap = 0x%llx, kret = 0x%llx\n", req_size, kheap-kernel_slide, kret);
+
+
+
+        if((kheap-kernel_slide) == 0xFFFFFFF0070C2D58 && req_size >= 0x3000)  //Is KHEAP_DEFAULT?
         {
             // kprintf("[XNUSPY_TEST_iOS15] kalloc_ext caller: 0x%llx\n", (__builtin_return_address(0) - kernel_slide));
             kprintf("[XNUSPY_TEST_iOS15] kalloc_ext[KHEAP_DEFAULT] req_size: 0x%llx, kheap = 0x%llx, kret = 0x%llx\n", req_size, kheap-kernel_slide, kret);
         }
 
-        // if(caller == 0xFFFFFFF007159D80)    //Is called from ipc_kmsg_alloc?
-        if((kheap-kernel_slide) == 0xFFFFFFF0070C3350 && req_size == 0x3fcc)  //Is KHEAP_DATA_BUFFERS?
+        if((kheap-kernel_slide) == 0xFFFFFFF0070C3350 && req_size >= 0x3000)  //Is KHEAP_DATA_BUFFERS?
         {
             // kprintf("[XNUSPY_TEST_iOS15] kalloc_ext caller: 0x%llx\n", (__builtin_return_address(0) - kernel_slide));
             kprintf("[XNUSPY_TEST_iOS15] kalloc_ext[KHEAP_DATA_BUFFERS] req_size: 0x%llx, kheap = 0x%llx, kret = 0x%llx\n", req_size, kheap-kernel_slide, kret);
+        }
+
+
+        if((kheap-kernel_slide) == 0xFFFFFFF0070C3828 && req_size >= 0x3000)  //Is KHEAP_KEXT?
+        {
+            // kprintf("[XNUSPY_TEST_iOS15] kalloc_ext caller: 0x%llx\n", (__builtin_return_address(0) - kernel_slide));
+            kprintf("[XNUSPY_TEST_iOS15] kalloc_ext[KHEAP_KEXT] req_size: 0x%llx, kheap = 0x%llx, kret = 0x%llx\n", req_size, kheap-kernel_slide, kret);
         }
     }
 
